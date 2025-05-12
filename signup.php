@@ -1,3 +1,20 @@
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    include 'connect.php';
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $sql = "insert into `registration`(username,password) values('$username','$password')";
+    $result = mysqli_query($connection, $sql);
+
+    if ($result) {
+        echo "Data inserted ";
+    } else {
+        die(mysqli_error($connection));
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -9,8 +26,20 @@
 </head>
 
 <body>
-
-
+    <h2 class="text-center">Sign up</h2>
+    <div class="container mt-5 w-50">
+        <form action="signup.php" method="post">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" placeholder="Enter Username" class="form-control" name="username">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" placeholder="Enter Password" class="form-control" name="password">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+    </div>
 </body>
 
 </html>
