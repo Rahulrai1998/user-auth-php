@@ -1,16 +1,34 @@
 <?php
+
+$signupSuccess = 0;
+$userAlreadyExists = 0;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include 'connect.php';
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $sql = "insert into `registration`(username,password) values('$username','$password')";
-    $result = mysqli_query($connection, $sql);
+    // if ($result) {
+    //     echo "Data inserted ";
+    // } else {
+    //     die(mysqli_error($connection));
+    // }
 
+    $sql = "select * from `registration` where username='$username'";
+    $result = mysqli_query($connection, $sql);
     if ($result) {
-        echo "Data inserted ";
-    } else {
-        die(mysqli_error($connection));
+        $count = mysqli_num_rows($result);
+        if ($count > 0) {
+            // echo "Username already exists";
+            $userAlreadyExists = 1;
+        } else {
+            $sql = "insert into `registration`(username,password) values('$username','$password')";
+            $insertResult = mysqli_query($connection, $sql);
+            if ($insertResult) {
+                $signupSuccess = 1;
+                // echo "Signup successful!";
+            } else die(mysqli_error($connection));
+        }
     }
 }
 ?>
@@ -37,7 +55,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" placeholder="Enter Password" class="form-control" name="password">
             </div>
-            <button type="submit" class="btn btn-primary w-100">Submit</button>
+            <button type="submit" class="btn btn-primary w-100">Sign up</button>
+            <?php
+            if ($userAlreadyExists) {
+                echo '<div class="alert alert-warning" role="alert" mt-5>
+                        User already exists!!
+                        </div>';
+            }
+            ?>
+            <?php
+            if ($signupSuccess) {
+                echo '<div class="alert alert-success" role="alert">
+                    Signed up!
+                    </div>';
+            }
+
+            ?>
         </form>
     </div>
 </body>
