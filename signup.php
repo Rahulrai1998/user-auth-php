@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <h2 class="text-center">Sign up</h2>
+    <h2 class="text-center mt-5">Sign up</h2>
     <div class="container mt-5 w-50">
         <form action="signup.php" method="post">
             <div class="mb-3">
@@ -56,22 +56,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" placeholder="Enter Password" class="form-control" name="password">
             </div>
             <button type="submit" class="btn btn-primary w-100">Sign up</button>
-            <?php
-            if ($userAlreadyExists) {
-                echo '<div class="alert alert-warning" role="alert" mt-5>
+            <a href="login.php">Login</a>
+        </form>
+        <?php
+        if ($userAlreadyExists) {
+            echo '<div class="alert alert-warning" role="alert" mt-5>
                         User already exists!!
                         </div>';
-            }
-            ?>
-            <?php
-            if ($signupSuccess) {
-                echo '<div class="alert alert-success" role="alert">
+        }
+        ?>
+        <?php
+        if ($signupSuccess) {
+            echo '<div class="alert alert-success" role="alert">
                     Signed up!
                     </div>';
-            }
+        }
 
-            ?>
-        </form>
+        ?>
     </div>
 </body>
 
